@@ -1,18 +1,27 @@
 #include <iostream>
 #include <fstream>
+#include <string.h>
+#include <ctime>
+#include <cstdlib>
+
 
 using namespace std; // only for 
 
-bool random_seed() {
+int random_number(int max_num) {
+    int random_num;
 
+    srand(time(0));
+    random_num = (rand() % max_num) + 1;
+
+    return random_num;
 }
 
 bool find_word() {
-
+    return false;
 }
 
 bool display_word() {
-    
+    return true;
 }
 
 int main() {
@@ -22,17 +31,37 @@ int main() {
     char sum[10];
 
     // open a file
-    fin.open("word_list.fic", ios::binary|ios::in);
+    fin.open("100_words.fic", ios::binary|ios::in);
 
     char the_string[128];
+    int lenOfString;
+    int counter = 0;
+    char *master_list[100];
+    int random_num;
 
     while(!fin.eof()) {
         fin >> the_string;
-        cout << the_string << " " << endl;
+        cout << the_string << endl;
+        master_list[counter] = the_string;
+
+        // all 100 words stored in master_list
+        counter++;
     }
     fin.close();
 
-    // randomly select a word from the file
+    cout << "\n" << "THE LIST: " << "\n"<< endl;
+
+    for (int n=0; n < counter + 1; n++) {
+        cout << master_list[n] << endl;
+    }
+
+    // randomly select a word from master_list
+    random_num = random_number(100);
+
+    //random_word = master_list[random_num];
+    
+    //char[15] selected_word = selected_word()
+
     // scramble the word
 
     // show the scrambled word
