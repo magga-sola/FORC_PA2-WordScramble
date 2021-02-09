@@ -24,7 +24,11 @@ int main() {
     char sum[10];
 
     // open a file
+<<<<<<< HEAD
     fin.open("100_words.fic", ios::binary | ios::in);
+=======
+    fin.open("100_words.fic", ios::binary|ios::in);
+>>>>>>> main
 
     char the_string[30];
     int lenOfString;
@@ -46,6 +50,11 @@ int main() {
     strcpy(random_word, master_list[random_num]);
     cout << random_word << endl;
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> main
     // scramble the word
     //word_scrambler(random_word);
 
