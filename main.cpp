@@ -58,6 +58,9 @@ int main() {
     int random_num;
     char random_word[LENOFWORD];
     char* pnr = new char[LENOFWORD];
+    char* word = "hello my name is Anton";
+    cout << word << endl;
+    bool checker = false;
 
     while (!fin.eof()) {
         fin >> the_string;
@@ -82,6 +85,15 @@ int main() {
     randomize(pnr);
     cout << pnr << endl;
 
+    
+    while (checker != true) {
+        cout << pnr << endl;
+        cout << "Pleas enter a guess word: ";
+        cin >> word;
+        if (word == random_word) {
+            checker = true;
+        }
+    }
     
 
     // scramble the word
