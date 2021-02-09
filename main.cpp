@@ -16,13 +16,6 @@ int random_number(int max_num) {
     return random_num;
 }
 
-bool find_word() {
-    return false;
-}
-
-bool display_word() {
-    return true;
-}
 
 int main() {
     ofstream fout;
@@ -33,40 +26,34 @@ int main() {
     // open a file
     fin.open("100_words.fic", ios::binary|ios::in);
 
-    char the_string[128];
+    char the_string[30];
     int lenOfString;
     int counter = 0;
-    char *master_list[100];
+    char master_list[100][30];
     int random_num;
+    char random_word[30];
 
     while(!fin.eof()) {
         fin >> the_string;
-        cout << the_string << endl;
-        master_list[counter] = the_string;
-
-        // all 100 words stored in master_list
+        strcpy(master_list[counter], the_string);
         counter++;
     }
     fin.close();
 
-    cout << "\n" << "THE LIST: " << "\n"<< endl;
-
-    for (int n=0; n < counter + 1; n++) {
-        cout << master_list[n] << endl;
-    }
-
     // randomly select a word from master_list
     random_num = random_number(100);
 
-    //random_word = master_list[random_num];
-    
-    //char[15] selected_word = selected_word()
+    strcpy(random_word, master_list[random_num]);
+    cout << random_word << endl;
 
     // scramble the word
+    //word_scrambler(random_word);
 
     // show the scrambled word
+    //display_word(random_word);
 
     // user can guess the word
+    //play();
 
     // ask user if they want to continue
     return 0;
