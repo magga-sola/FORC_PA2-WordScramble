@@ -1,65 +1,59 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
+#include <ctime>
+#include <cstdlib>
+
 
 using namespace std; // only for 
+
+int random_number(int max_num) {
+    int random_num;
+
+    srand(time(0));
+    random_num = (rand() % max_num) + 1;
+
+    return random_num;
+}
+
+
 int main() {
     ofstream fout;
     ifstream fin;
     int x;
     char sum[10];
-    int random_number;
-    int strLen = 0;
-    
-    FILE* prt = fopen("word_list.fic", "r");
 
     // open a file
-    fin.open("word_list.fic", ios::binary | ios::in);
+    fin.open("100_words.fic", ios::binary | ios::in);
 
-    char the_string[128];
+    char the_string[30];
+    int lenOfString;
+    int counter = 0;
+    char master_list[100][30];
+    int random_num;
+    char random_word[30];
 
     while (!fin.eof()) {
         fin >> the_string;
-        int temp = strlen(the_string);
-        if (temp > strLen) {
-            strLen = temp;
-        }
-
-        //cout << the_string << " " << strLen << endl;
+        strcpy(master_list[counter], the_string);
+        counter++;
     }
-    cout << strLen << endl;
-    int strlens = strlen(the_string);
     fin.close();
-    //char hello = new char[strlens];
-
-    /*cout << "\n" << "THE LIST: " << "\n"<< endl;
-
-    for (int n=0; n < counter; n++) {
-        cout << master_list[n] << endl;
-    }
 
     // randomly select a word from master_list
-    random_num = random_number(100);*/
+    random_num = random_number(100);
 
-    char theWord[strLen];
-    fscanf(prt, "%s", theWord);
-    cout << theWord << " Hello besties" << endl;
-    random_number = rand() % strLen;
-    cout << random_number;
-    cout << the_string[random_number];
-    cout << the_string;
-    //strcpy(hello, the_string[random_number]);
-    //cout << hello << endl;
-
-    //random_word = master_list[random_num];
-
-    //char[15] selected_word = selected_word()
+    strcpy(random_word, master_list[random_num]);
+    cout << random_word << endl;
 
     // scramble the word
+    //word_scrambler(random_word);
 
     // show the scrambled word
+    //display_word(random_word);
 
     // user can guess the word
+    //play();
 
     // ask user if they want to continue
     return 0;
