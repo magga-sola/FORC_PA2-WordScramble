@@ -21,9 +21,6 @@ int main() {
     }
     fin.close();
 
-<<<<<<< Updated upstream
-    // randomly select a word from the file
-=======
     cout << "\n" << "THE LIST: " << "\n"<< endl;
 
     for (int n=0; n < counter; n++) {
@@ -37,7 +34,6 @@ int main() {
     
     //char[15] selected_word = selected_word()
 
->>>>>>> Stashed changes
     // scramble the word
 
     // show the scrambled word
