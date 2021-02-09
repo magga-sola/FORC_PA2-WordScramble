@@ -46,6 +46,8 @@ int main() {
     strcpy(random_word, master_list[random_num]);
     cout << random_word << endl;
 
+
+
     // scramble the word
     //word_scrambler(random_word);
 
