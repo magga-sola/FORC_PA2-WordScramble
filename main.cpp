@@ -1,8 +1,20 @@
 #include <iostream>
 #include <fstream>
-#include <string.h>
 
 using namespace std; // only for 
+
+bool random_seed() {
+
+}
+
+bool find_word() {
+
+}
+
+bool display_word() {
+    
+}
+
 int main() {
     ofstream fout;
     ifstream fin;
@@ -16,8 +28,7 @@ int main() {
 
     while(!fin.eof()) {
         fin >> the_string;
-        int strLen = strlen(the_string);
-        cout << the_string << " " << strLen << endl;
+        cout << the_string << " " << endl;
     }
     fin.close();
 
