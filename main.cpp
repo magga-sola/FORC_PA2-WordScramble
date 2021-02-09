@@ -24,7 +24,7 @@ int main() {
     char sum[10];
 
     // open a file
-    fin.open("100_words.fic", ios::binary|ios::in);
+    fin.open("100_words.fic", ios::binary | ios::in);
 
     char the_string[30];
     int lenOfString;
@@ -33,7 +33,7 @@ int main() {
     int random_num;
     char random_word[30];
 
-    while(!fin.eof()) {
+    while (!fin.eof()) {
         fin >> the_string;
         strcpy(master_list[counter], the_string);
         counter++;
@@ -45,8 +45,6 @@ int main() {
 
     strcpy(random_word, master_list[random_num]);
     cout << random_word << endl;
-
-
 
     // scramble the word
     //word_scrambler(random_word);
