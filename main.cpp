@@ -40,6 +40,18 @@ void randomize(char *pnr) {
     }
 }
 
+bool cmp(char* word, char* random_word) {
+    if (strlen(word) != strlen(random_word)) {
+        return false;
+    }
+    for (int i = 0; i < strlen(word); i++) {
+        if (word[i] != random_word[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 int main() {
 
     srand(time(NULL));
@@ -58,8 +70,7 @@ int main() {
     int random_num;
     char random_word[LENOFWORD];
     char* pnr = new char[LENOFWORD];
-    char* word = "hello my name is Anton";
-    cout << word << endl;
+    char* word = new char[200];
     bool checker = false;
 
     while (!fin.eof()) {
@@ -85,13 +96,15 @@ int main() {
     randomize(pnr);
     cout << pnr << endl;
 
-    
+    char *word2 = new char[strlen(random_word)];
+    strcpy(word2, random_word);
     while (checker != true) {
         cout << pnr << endl;
         cout << "Pleas enter a guess word: ";
         cin >> word;
-        if (word == random_word) {
+        if (cmp(word, word2)){
             checker = true;
+            cout << "Well Done, you have solved the crisis!!!!";
         }
     }
     
