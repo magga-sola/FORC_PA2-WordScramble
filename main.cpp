@@ -16,17 +16,6 @@ int random_number(int max_num) {
     return random_num;
 }
 
-bool word_scrambler(random_word) {
-    return false;
-}
-
-bool display_word(random_word) {
-    return true;
-}
-
-bool play() {
-    return false;
-}
 
 int main() {
     ofstream fout;
@@ -55,15 +44,16 @@ int main() {
     random_num = random_number(100);
 
     strcpy(random_word, master_list[random_num]);
+    cout << random_word << endl;
 
     // scramble the word
-    word_scrambler(random_word);
+    //word_scrambler(random_word);
 
     // show the scrambled word
-    display_word(random_word);
+    //display_word(random_word);
 
     // user can guess the word
-    play();
+    //play();
 
     // ask user if they want to continue
     return 0;
