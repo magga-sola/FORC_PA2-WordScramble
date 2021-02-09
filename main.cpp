@@ -33,32 +33,24 @@ int main() {
     // open a file
     fin.open("100_words.fic", ios::binary|ios::in);
 
-    char the_string[128];
+    char the_string[30];
     int lenOfString;
     int counter = 0;
-    char *master_list[100];
+    char master_list[100][30];
     int random_num;
 
     while(!fin.eof()) {
         fin >> the_string;
-        cout << the_string << endl;
-        master_list[counter] = the_string;
-
-        // all 100 words stored in master_list
+        strcpy(master_list[counter], the_string);
         counter++;
     }
     fin.close();
 
-    cout << "\n" << "THE LIST: " << "\n"<< endl;
-
-    for (int n=0; n < counter + 1; n++) {
-        cout << master_list[n] << endl;
-    }
-
     // randomly select a word from master_list
     random_num = random_number(100);
 
-    //random_word = master_list[random_num];
+    cout << master_list[random_num] << endl;
+
     
     //char[15] selected_word = selected_word()
 
