@@ -24,6 +24,10 @@ bool display_word(random_word) {
     return true;
 }
 
+bool play() {
+    return false;
+}
+
 int main() {
     ofstream fout;
     ifstream fin;
