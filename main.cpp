@@ -1,8 +1,29 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
+#include <ctime>
+#include <cstdlib>
+
 
 using namespace std; // only for 
+
+int random_number(int max_num) {
+    int random_num;
+
+    srand(time(0));
+    random_num = (rand() % max_num) + 1;
+
+    return random_num;
+}
+
+bool find_word() {
+    return false;
+}
+
+bool display_word() {
+    return true;
+}
+
 int main() {
     ofstream fout;
     ifstream fin;
@@ -10,20 +31,27 @@ int main() {
     char sum[10];
 
     // open a file
-    fin.open("word_list.fic", ios::binary|ios::in);
+    fin.open("100_words.fic", ios::binary|ios::in);
 
     char the_string[128];
+    int lenOfString;
+    int counter = 0;
+    char *master_list[100];
+    int random_num;
 
     while(!fin.eof()) {
         fin >> the_string;
-        int strLen = strlen(the_string);
-        cout << the_string << " " << strLen << endl;
+        cout << the_string << endl;
+        master_list[counter] = the_string;
+
+        // all 100 words stored in master_list
+        counter++;
     }
     fin.close();
 
     cout << "\n" << "THE LIST: " << "\n"<< endl;
 
-    for (int n=0; n < counter; n++) {
+    for (int n=0; n < counter + 1; n++) {
         cout << master_list[n] << endl;
     }
 
