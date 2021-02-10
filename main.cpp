@@ -26,8 +26,9 @@ bool random_function(int max_num, char word[], char master_list[][30]) {
 
 */
 
-bool display(char scrambled_word[], char normal_word[]) {
+bool display(char *scrambled_word, char *normal_word) {
     int random_num = (rand() % (strlen(normal_word) - 1) + 1);
+
     char dash_string[strlen(normal_word)*2];
     int dash_index;
     char dash = '_';
@@ -105,10 +106,10 @@ int main() {
     char master_list[LENOFFILE][LENOFWORD];
     int random_num;
     char random_word[LENOFWORD];
-    char* pnr = new char[LENOFWORD];
-    char* word = new char[200];
+    char* pnr = new char[LENOFWORD]; // pointer to random_word
+    char* word = new char[200]; // pointer to input word
     bool checker = false;
-    char letter;
+    char letter; // input letter to keep going
 
     while (!fin.eof()) {
         fin >> the_string;
@@ -118,26 +119,28 @@ int main() {
     fin.close();
 
     // randomly select a word from master_list
-    //random_num = random_number(100);
-
     int random = rand() % 101;
-
     strcpy(random_word, master_list[random]);
-    cout << random_word << endl;
-
+    //cout << random_word << endl;
+    
     strcpy(pnr, random_word);
 
-    cout << pnr << endl;
-    cout << sizeof(pnr) << endl;
-    cout << strlen(pnr) << endl;
-    randomize(pnr);
+    //cout << pnr << endl;
+    //cout << sizeof(pnr) << endl;
+    //cout << strlen(pnr) << endl;
+
+    randomize(pnr); // scrambling the random_word
     cout << pnr << endl;
 
-    char *word2 = new char[strlen(random_word)];
+    char *word2 = new char[strlen(random_word)]; // not scrambled random_word
     strcpy(word2, random_word);
+    display(pnr, word2);
+
+
+    /*
     while (checker != true) {
         cout << pnr << endl;
-        cout << "Pleas enter a guess word: ";
+        cout << "Please enter a guess word: ";
         cin >> word;
         if (cmp(word, word2)){
             cout << "Continue?(y/n)";
@@ -152,14 +155,14 @@ int main() {
             }
         }
     }
+    */
+    
     
 
     // scramble the word
     //fischer algorithm thingy(random_word);
-    char scrambled[20] = "scrambled";
 
     // show the scrambled word
-    display(scrambled, random_word);
 
     // user can guess the word
     //play();
