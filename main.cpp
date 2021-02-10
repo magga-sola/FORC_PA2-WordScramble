@@ -72,6 +72,7 @@ int main() {
     char* pnr = new char[LENOFWORD];
     char* word = new char[200];
     bool checker = false;
+    char letter;
 
     while (!fin.eof()) {
         fin >> the_string;
@@ -103,8 +104,16 @@ int main() {
         cout << "Pleas enter a guess word: ";
         cin >> word;
         if (cmp(word, word2)){
-            checker = true;
-            cout << "Well Done, you have solved the crisis!!!!";
+            cout << "Continue?(y/n)";
+            cin >> letter;
+            cout << "Well Done, you have solved the crisis!!!!" << endl;
+            if (letter == 'y') {
+                randomize(pnr);
+                continue;
+            }
+            if(letter == 'n'){
+                checker = true;
+            }
         }
     }
     
