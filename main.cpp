@@ -33,7 +33,7 @@ bool display(char *scrambled_word, char *normal_word) {
     int dash_index;
     char dash = '_';
     cout << "\n" <<"LET THE GAME BEGIN" << "\n\n" << endl;
-    cout << " The word you're trying to guess scrambled is: " << scrambled_word << "\n\n" << endl;
+    cout << "The word you're trying to guess scrambled is: " << scrambled_word << "\n\n" << endl;
 
     for (int i = 0; i < (strlen(normal_word)*2); i+=2) { 
         dash_string[i] = dash;
@@ -46,31 +46,22 @@ bool display(char *scrambled_word, char *normal_word) {
         // even number
         dash_index = (random_num*2);
     }
-
     dash_string[dash_index] = normal_word[random_num];
-    
-    cout << dash_string << "\n\n" << endl;
 
+    cout << dash_string << "\n\n" << endl;
     return true; 
 }
 
 void swap(char *arr, int i, int j) {
-
     char temp = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;
-
 }
 
 void randomize(char *pnr) {
-    
     srand(time(NULL));
-
     for (int i = strlen(pnr) - 1; i > 0; i--) {
-        
-
         int j = rand() % (i + 1);
-
         swap(pnr, i, j);
     }
 }
@@ -108,6 +99,7 @@ int main() {
     char* word = new char[200]; // pointer to input word
     bool checker = false;
     char letter; // input letter to keep going
+    int points = 10;
 
     while (!fin.eof()) {
         fin >> the_string;
@@ -127,11 +119,12 @@ int main() {
     strcpy(word2, random_word);
     
     while (checker != true) {
-        cout << "\n\n"<< pnr << "\n\n" << endl;
-        cout << "Please enter a guess word: ";
+        cout << "\n"<< pnr << "\n" << endl;
+        cout << "Current points: " << points << endl;
+        cout << "\nPlease enter a guess word: ";
         cin >> word;
         if (cmp(word, word2)){
-            cout << "Continue?(y/n)";
+            cout << "Continue?(y/n): ";
             cin >> letter;
             cout << "Well Done, you have solved the crisis!!!!" << endl;
             if (letter == 'y') {
@@ -142,12 +135,16 @@ int main() {
                 checker = true;
             }
         } else {
-            cout << "Would you like a hint? (y/n)";
+            cout << "Would you like a hint? (y/n): ";
             cin >> letter;
             if (letter == 'y') {
                 display(pnr, word2);
+                points -= 1;
+                if (points == 0) {
+                    cout << "You lost sorry bout it :(" << endl;
+                    checker = true;
+                }
             }
-
         }
     }
     
