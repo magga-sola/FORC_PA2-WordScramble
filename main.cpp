@@ -39,9 +39,8 @@ bool display(char scrambled_word[], char normal_word[]) {
     }
 
     dash_string[dash_index] = normal_word[random_num];
-    cout << "the right letter is: " << normal_word[random_num] << endl;
     
-    cout << dash_string << endl;
+    cout << dash_string << "\n\n" << endl;
 
     return false;
     
@@ -88,6 +87,4 @@ int main() {
 
     // ask user if they want to continue
     return 0;
-
-
 }
