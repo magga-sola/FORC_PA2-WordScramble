@@ -12,34 +12,17 @@ using namespace std::chrono;
 int LENOFWORD = 20;
 int LENOFFILE = 100;
 
-int random_number(int max_num) {
-bool random_function(int max_num, char word[], char master_list[][30]) {
->>>>>>> origin/magga2
-    int random_num;
 
-    srand(time(0));
-    random_num = (rand() % max_num) + 1;
 
-    return random_num;
-}
-void swap(char *arr, int i, int j) {
 
-    char temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
-
-    strcpy(word, master_list[random_num]);
-
-    return true;
-}
-
-bool display(char scrambled_word[], char normal_word[]) {
+bool display(char *scrambled_word, char *normal_word) {
     int random_num = (rand() % (strlen(normal_word) - 1) + 1);
+
     char dash_string[strlen(normal_word)*2];
     int dash_index;
     char dash = '_';
     cout << "\n" <<"LET THE GAME BEGIN" << "\n\n" << endl;
-    cout << " The word you're trying to guess scrambled is: " << normal_word << "\n\n" << endl;
+    cout << " The word you're trying to guess scrambled is: " << scrambled_word << "\n\n" << endl;
 
     for (int i = 0; i < (strlen(normal_word)*2); i+=2) { 
         dash_string[i] = dash;
@@ -56,9 +39,16 @@ bool display(char scrambled_word[], char normal_word[]) {
     dash_string[dash_index] = normal_word[random_num];
     
     cout << dash_string << "\n\n" << endl;
-
-    return false;
     
+    return true; 
+}
+
+void swap(char *arr, int i, int j) {
+
+    char temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+
 }
 
 void randomize(char *pnr) {
@@ -103,11 +93,12 @@ int main() {
     char master_list[LENOFFILE][LENOFWORD];
     int random_num;
     char random_word[LENOFWORD];
-    char* pnr = new char[LENOFWORD];
-    char* word = new char[200];
+    char* pnr = new char[LENOFWORD]; // pointer to random_word
+    char* word = new char[200]; // pointer to input word
     bool checker = false;
-    char letter;
 
+
+    char letter; // input letter to keep going
 
     while (!fin.eof()) {
         fin >> the_string;
@@ -120,23 +111,17 @@ int main() {
     //random_num = random_number(100);
 
     int random = rand() % 101;
-
     strcpy(random_word, master_list[random]);
-    cout << random_word << endl;
-
+    
     strcpy(pnr, random_word);
+    randomize(pnr); // scrambling the random_word
 
-    cout << pnr << endl;
-    cout << sizeof(pnr) << endl;
-    cout << strlen(pnr) << endl;
-    randomize(pnr);
-    cout << pnr << endl;
-
-    char *word2 = new char[strlen(random_word)];
+    char *word2 = new char[strlen(random_word)]; // not scrambled random_word
     strcpy(word2, random_word);
+    
     while (checker != true) {
-        cout << pnr << endl;
-        cout << "Pleas enter a guess word: ";
+        cout << "\n\n"<< pnr << "\n\n" << endl;
+        cout << "Please enter a guess word: ";
         cin >> word;
         if (cmp(word, word2)){
             cout << "Continue?(y/n)";
@@ -149,19 +134,22 @@ int main() {
             if(letter == 'n'){
                 checker = true;
             }
+        } else {
+            cout << "Would you like a hint? (y/n)";
+            cin >> letter;
+            if (letter == 'y') {
+                display(pnr, word2);
+            }
+
         }
     }
     
-
-    random_function(100, random_word, master_list);
-    cout << random_word << endl;
-
+    
+    
     // scramble the word
     //fischer algorithm thingy(random_word);
-    char scrambled[20] = "scrambled";
 
     // show the scrambled word
-    display(scrambled, random_word);
 
     // user can guess the word
     //play();
