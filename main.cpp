@@ -41,9 +41,8 @@ int make_dash_index(int random_num) {
 }
 
 
-char* create_dash(int len) {
+char* create_dash(int len, char* word) {
     char dash = '_';
-    char word[len];
     for (int i=0; i < len; i++) {
         word[i] = dash;
     }
@@ -67,10 +66,10 @@ void print_dash(char *dash_string) {
     }
 }
 
-char* hint(char* dash_string, char *scrambled_word, char *normal_word) {
+char* hint(char* dash_string, char *scrambled_word, char *normal_word, char* wordArr) {
     int random_num = (rand() % (strlen(normal_word))); // in order to choose a random index for revealed letter
     int lenOfString = strlen(normal_word);
-    dash_string = create_dash(lenOfString);
+    dash_string = create_dash(lenOfString, wordArr);
     
     //cout << "\033[2J\033[1;1H"; // clears the terminal window
     print_dash(dash_string);
@@ -195,6 +194,7 @@ int main() {
 
     char *word2 = new char[strlen(random_word)]; // not scrambled random_word
     strcpy(word2, random_word);
+    char* wordArr = new char[strlen(random_word)];
     
     while (checker != true) {
         //cout << "\033[2J\033[1;1H"; // clears the terminal window
@@ -226,7 +226,7 @@ int main() {
             cout << "Would you like a hint? (y/n)";
             cin >> letter;
             if (letter == 'y') {
-                char_array = hint(dash_string, pnr, word2);
+                char_array = hint(dash_string, pnr, word2, wordArr);
             }
         }
 
