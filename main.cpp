@@ -7,13 +7,44 @@
 
 using namespace std; // only for 
 
-int random_number(int max_num) {
+bool random_function(int max_num, char word[], char master_list[][30]) {
     int random_num;
 
     srand(time(0));
     random_num = (rand() % max_num) + 1;
 
-    return random_num;
+    strcpy(word, master_list[random_num]);
+
+    return true;
+}
+
+bool display(char scrambled_word[], char normal_word[]) {
+    int random_num = (rand() % (strlen(normal_word) - 1) + 1);
+    char dash_string[20];
+    int dash_index;
+    char dash = '_';
+    cout << "\n" <<"LET THE GAME BEGIN" << "\n\n" << endl;
+    cout << " The word you're trying to guess scrambled is: " << normal_word << "\n\n" << endl;
+
+    for (int i = 0; i < (strlen(normal_word)*2); i+=2) { 
+        dash_string[i] = dash;
+        dash_string[i+1] = ' ';
+    }
+    if (!random_num % 2) {
+        // uneven number
+        dash_index = random_num + 1;
+    } else {
+        // even number
+        dash_index = (random_num*2);
+    }
+
+    dash_string[dash_index] = normal_word[random_num];
+    cout << "the right letter is: " << normal_word[random_num] << endl;
+    
+    cout << dash_string << endl;
+
+    return false;
+    
 }
 
 
@@ -32,6 +63,7 @@ int main() {
     char master_list[100][30];
     int random_num;
     char random_word[30];
+    char hello[20];
 
     while(!fin.eof()) {
         fin >> the_string;
@@ -41,18 +73,15 @@ int main() {
     fin.close();
 
     // randomly select a word from master_list
-    random_num = random_number(100);
-
-    strcpy(random_word, master_list[random_num]);
+    random_function(100, random_word, master_list);
     cout << random_word << endl;
 
-
-
     // scramble the word
-    //word_scrambler(random_word);
+    //fischer algorithm thingy(random_word);
+    char scrambled[20] = "scrambled";
 
     // show the scrambled word
-    //display_word(random_word);
+    display(scrambled, random_word);
 
     // user can guess the word
     //play();
