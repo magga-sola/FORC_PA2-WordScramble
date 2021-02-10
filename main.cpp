@@ -3,16 +3,16 @@
 #include <string.h>
 #include <ctime>
 #include <cstdlib>
-
+#include <chrono>
 
 using namespace std; // only for 
+using namespace std::chrono;
 
-<<<<<<< HEAD
+
 int LENOFWORD = 20;
 int LENOFFILE = 100;
 
-/*int random_number(int max_num) {
-=======
+int random_number(int max_num) {
 bool random_function(int max_num, char word[], char master_list[][30]) {
 >>>>>>> origin/magga2
     int random_num;
@@ -20,17 +20,14 @@ bool random_function(int max_num, char word[], char master_list[][30]) {
     srand(time(0));
     random_num = (rand() % max_num) + 1;
 
-<<<<<<< HEAD
     return random_num;
-}*/
-
+}
 void swap(char *arr, int i, int j) {
 
     char temp = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;
 
-=======
     strcpy(word, master_list[random_num]);
 
     return true;
@@ -62,7 +59,6 @@ bool display(char scrambled_word[], char normal_word[]) {
 
     return false;
     
->>>>>>> origin/magga2
 }
 
 void randomize(char *pnr) {
@@ -106,16 +102,12 @@ int main() {
     int counter = 0;
     char master_list[LENOFFILE][LENOFWORD];
     int random_num;
-<<<<<<< HEAD
     char random_word[LENOFWORD];
     char* pnr = new char[LENOFWORD];
     char* word = new char[200];
     bool checker = false;
     char letter;
-=======
-    char random_word[30];
-    char hello[20];
->>>>>>> origin/magga2
+
 
     while (!fin.eof()) {
         fin >> the_string;
@@ -125,7 +117,6 @@ int main() {
     fin.close();
 
     // randomly select a word from master_list
-<<<<<<< HEAD
     //random_num = random_number(100);
 
     int random = rand() % 101;
@@ -162,11 +153,9 @@ int main() {
     }
     
 
-=======
     random_function(100, random_word, master_list);
     cout << random_word << endl;
 
->>>>>>> origin/magga2
     // scramble the word
     //fischer algorithm thingy(random_word);
     char scrambled[20] = "scrambled";
@@ -178,5 +167,12 @@ int main() {
     //play();
 
     // ask user if they want to continue
+
+    auto start = high_resolution_clock::now();
+
+
+    auto stop = high_resolution_clock::now();
+
+    auto duration = duration_cast<seconds>(stop - start);
     return 0;
 }
