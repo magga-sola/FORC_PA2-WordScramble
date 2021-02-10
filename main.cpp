@@ -20,7 +20,7 @@ bool random_function(int max_num, char word[], char master_list[][30]) {
 
 bool display(char scrambled_word[], char normal_word[]) {
     int random_num = (rand() % (strlen(normal_word) - 1) + 1);
-    char dash_string[20];
+    char dash_string[strlen(normal_word)*2];
     int dash_index;
     char dash = '_';
     cout << "\n" <<"LET THE GAME BEGIN" << "\n\n" << endl;
