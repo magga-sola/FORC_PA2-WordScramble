@@ -33,7 +33,7 @@ bool display(char *scrambled_word, char *normal_word) {
     int dash_index;
     char dash = '_';
     cout << "\n" <<"LET THE GAME BEGIN" << "\n\n" << endl;
-    cout << " The word you're trying to guess scrambled is: " << normal_word << "\n\n" << endl;
+    cout << " The word you're trying to guess scrambled is: " << scrambled_word << "\n\n" << endl;
 
     for (int i = 0; i < (strlen(normal_word)*2); i+=2) { 
         dash_string[i] = dash;
