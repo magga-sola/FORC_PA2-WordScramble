@@ -51,9 +51,7 @@ bool display(char *scrambled_word, char *normal_word) {
     
     cout << dash_string << "\n\n" << endl;
 
-    return false;
-    
-    return random_num;
+    return true; 
 }
 
 void swap(char *arr, int i, int j) {
@@ -121,25 +119,15 @@ int main() {
     // randomly select a word from master_list
     int random = rand() % 101;
     strcpy(random_word, master_list[random]);
-    //cout << random_word << endl;
     
     strcpy(pnr, random_word);
-
-    //cout << pnr << endl;
-    //cout << sizeof(pnr) << endl;
-    //cout << strlen(pnr) << endl;
-
     randomize(pnr); // scrambling the random_word
-    cout << pnr << endl;
 
     char *word2 = new char[strlen(random_word)]; // not scrambled random_word
     strcpy(word2, random_word);
-    display(pnr, word2);
-
-
-    /*
+    
     while (checker != true) {
-        cout << pnr << endl;
+        cout << "\n\n"<< pnr << "\n\n" << endl;
         cout << "Please enter a guess word: ";
         cin >> word;
         if (cmp(word, word2)){
@@ -153,9 +141,16 @@ int main() {
             if(letter == 'n'){
                 checker = true;
             }
+        } else {
+            cout << "Would you like a hint? (y/n)";
+            cin >> letter;
+            if (letter == 'y') {
+                display(pnr, word2);
+            }
+
         }
     }
-    */
+    
     
     
 
