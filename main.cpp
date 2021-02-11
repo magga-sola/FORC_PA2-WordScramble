@@ -12,7 +12,7 @@ int LENOFFILE = 100;
 
 
 
-void create_dash(int len, char word[] ){
+char* create_dash(int len, char* word) {
     char dash = '_';
     for (int i=0; i < len; i++) {
         word[i] = dash;
@@ -31,9 +31,17 @@ void print_dash(char *dash_string) {
     return;
 }
 
-char *hint(char* dash_string2, char *scrambled_word, char *normal_word) {
+char* hint(char* dash_string, char *scrambled_word, char *normal_word, char* wordArr) {
     int random_num = (rand() % (strlen(normal_word))); // in order to choose a random index for revealed letter
     int lenOfString = strlen(normal_word);
+    dash_string = create_dash(lenOfString, wordArr);
+    
+    //cout << "\033[2J\033[1;1H"; // clears the terminal window
+    print_dash(dash_string);
+
+    while (!(dash_string[random_num] == '_')) {
+        random_num = (rand() % (strlen(normal_word) - 1) + 1); 
+    }
 
     // checking if pointer to dash_word exists
     if (dash_string2 == NULL) {
@@ -131,6 +139,7 @@ int main() {
 
     char *word2 = new char[strlen(random_word)]; // not scrambled random_word
     strcpy(word2, random_word);
+    char* wordArr = new char[strlen(random_word)];
     
     while (checker != true) {
         //cout << "\033[2J\033[1;1H"; // clears the terminal window
@@ -162,32 +171,7 @@ int main() {
             cout << "Would you like a hint? (y/n)";
             cin >> letter;
             if (letter == 'y') {
-                int len = strlen(pnr);
-                int random_num2 = (rand() % (LENOFWORD)); // in order to choose a random index for revealed letter
-
-                // checking if pointer to dash_word exists
-                if (has_entered == false) {
-                    has_entered = true;
-                    cout << "hello" << endl;
-                    char *dash_pointer;
-                    dash_pointer = new char[len];
-                    char dash_word[len];
-                    create_dash(len, dash_word);
-                    dash_pointer = dash_word;
-                    dash_pointer[random_num2] = pnr[random_num2];
-                    print_dash(dash_pointer);
-
-                }  else {
-                    cout << "I'm in the else!" << dash_pointer << endl;
-                    cout << "ran thing: " << dash_pointer[random_num2] << endl; 
-                    print_dash(dash_pointer);
-                    while (dash_pointer[random_num2] != '_') {
-                        random_num2 = (rand() % (len));
-                    }
-                    dash_pointer[random_num2] = pnr[random_num2];
-                    print_dash(dash_pointer);
-                }  
-                //dash_pointer = hint(dash_pointer, pnr, word2);
+                char_array = hint(dash_string, pnr, word2, wordArr);
             }
             points--;
         }
