@@ -3,39 +3,16 @@
 #include <string.h>
 #include <ctime>
 #include <cstdlib>
-using namespace std;
+#include <chrono>
 
-class WordJumble {
-    public:
-        char hint_array[20];
-        char master_list[100][20];
-        char random_word[20];
-        int points;
-        int iteration_counter;
-        char *pnr;
-        char* word; // pointer to input word
-        char* word2;
-        int lenOfRandom;
-        bool checker;
-        int overall_hint_counter;
-        int hint_counter;
-        // methods
-        void create_dash(int);
-        void initialize();
-        void randomize(char *);
-        bool cmp(char *, char *);
-        void hint();
-        void get_random_word();
-        void guess_word();
-        void swap(char *, int, int);
-        void set_random_word();
-        void set_checker();
-        void set_iteration_counter(int);
-};
+#include "helper.h"
+using namespace std;
+using namespace std::chrono;
+
 void WordJumble::set_checker () {
     checker = false;
 }
-void WordJumble::set_iteration_counter(int i ) {
+void WordJumble::set_iteration_counter(int i) {
     iteration_counter = i;
 }
 
@@ -47,20 +24,29 @@ void WordJumble::initialize () {
     overall_hint_counter = 0;
 }
 void WordJumble::set_random_word() {
+    //cout << "Line 1" << endl;
     hint_counter = 0;
+    //cout << "Line 2" << endl;
     get_random_word();
+    //cout << "Line 3" << endl;
     create_dash(lenOfRandom);
+    //cout << "Line 4" << endl;
 }
 
 void WordJumble::guess_word() {
     char hint_checker;
     bool quit = false;
+    hintsleft = 0;
     // returns when a person gets it or 
     while (quit == false) {
         cout << "\n" << " The word you're trying to guess scrambled is: " << pnr << "\n\n" << endl;
         cout << "Please enter a guess word: ";
         cin >> word;
         if (cmp(word, word2)){
+            delete[] word2;
+            delete[] pnr;
+            delete[] word;
+            delete[] random_word;
             cout << "Well Done, you have solved the crisis!!!!" << endl;
             quit = true;
         } else {
@@ -73,7 +59,8 @@ void WordJumble::guess_word() {
             if (hint_checker == 'y') {
                 hint();
                 hint_counter++;
-                points--;
+                overall_hint_counter++;
+                cout << "You have " << hintsleft << " hints left" << endl;
             }
         }
     }
@@ -89,29 +76,36 @@ void WordJumble::create_dash (int len) {
 
 void WordJumble::get_random_word() {
     ifstream fin;
+    //cout << "Line 1" << endl;
     char the_string[20];
-    int counter;
+    //cout << "Line 2" << endl;
+    int counter = 0;
 
     // read the file
     fin.open("100_words.fic", ios::binary | ios::in);
-
+    //cout << "Line 3" << endl;
     while (!fin.eof()) {
         fin >> the_string;
-        strcpy(master_list[counter], the_string);
+        strcpy(this->master_list[counter], the_string);
         counter++;
     }
+    //cout << "Hello world" << endl;
     fin.close();
+    //cout << "Line 4" << endl;
 
     // randomly choose from it
     int random = rand() % 101;
     strcpy(random_word, master_list[random]);
+    //cout << "Line 5" << endl;
     strcpy(pnr, random_word);
-
+    //cout << "Line 6" << endl;
     lenOfRandom = strlen(pnr);
     randomize(pnr); // scrambling the random_word
-
+    //cout << "Line 6" << endl;
     word2 = new char[strlen(random_word)]; // not scrambled random_word
+    //cout << "Line 7" << endl;
     strcpy(word2, random_word);
+    //cout << "Line 8" << endl;
 
 }
 
@@ -143,8 +137,8 @@ bool WordJumble::cmp(char *firt_string, char *second_string) {
 }
 
 void WordJumble::hint() {
-    cout << "\033[2J\033[1;1H"; 
-    cout << "\n" << endl;
+    //cout << "\033[2J\033[1;1H"; 
+    //cout << "\n" << endl;
     // add a random number
     if (hint_counter < lenOfRandom) {
         int random_num = (rand() % lenOfRandom);
@@ -154,41 +148,54 @@ void WordJumble::hint() {
         }
         hint_array[random_num] = random_word[random_num];
     } 
-    cout << "hint counter:"<< hint_counter << " and len: " << lenOfRandom  << "and points" << points << endl;
     for (int i = 0; i < lenOfRandom; i++) {
         cout << hint_array[i] << " ";
     }
-    cout << endl;
+}
+
+void WordJumble::calculateScore(auto start, auto stop) {
+    auto duration = duration_cast<seconds>(stop - start).count();
+
+    points = ((duration * 10)/ overall_hint_counter) + points - overall_hint_counter;
+    
 }
 
 int main() {
-    WordJumble hello;
+    WordJumble scrambleWord;
     bool quit = false;
     char letter;
     srand(time(NULL));
-    hello.initialize();
-    int iter_count;
+    scrambleWord.initialize();
+    int iter_count = 0;
     char *random_word = new char [20];
-
-    while (hello.checker == false) {
+    //cout << "Hello 1" << endl;
+    auto start = steady_clock::now();
+    while (scrambleWord.checker == false) {
+        //cout << "Hello 2" << endl;
         iter_count++;
-        hello.set_iteration_counter(iter_count);
-        hello.set_random_word();
-        random_word = hello.pnr;
+        scrambleWord.set_iteration_counter(iter_count);
+        //cout << "Hello 3" << endl;
+        scrambleWord.set_random_word();
+        //cout << "Hello 4" << endl;
+        random_word = scrambleWord.pnr;
         // plays the game
-        hello.guess_word();
-
-        if (hello.iteration_counter == 7) {
-            cout << "You finished with " << hello.points << " points left!" << endl;
+        scrambleWord.guess_word();
+        //cout << "Hello 5" << endl;
+        if (iter_count == 7) {
+            auto stop = steady_clock::now();
+            scrambleWord.calculateScore(start, stop);
+            cout << "You finished with " << scrambleWord.points << " points left!" << endl;
+            cout << "And it took you" << scrambleWord.duration << " seconds" << endl;
             break; 
+
         }
         cout << "Continue? (y) ";
         cin >> letter;
         cout << letter << endl;
         if (letter != 'y') { 
             break; 
-        } 
+        }
     }
-    
     return 0;
 }
+                               
