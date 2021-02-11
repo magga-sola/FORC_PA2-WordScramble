@@ -154,7 +154,6 @@ void WordJumble::hint() {
         }
         hint_array[random_num] = random_word[random_num];
     } 
-    cout << "hint counter:"<< hint_counter << " and len: " << lenOfRandom  << "and points" << points << endl;
     for (int i = 0; i < lenOfRandom; i++) {
         cout << hint_array[i] << " ";
     }
@@ -189,6 +188,6 @@ int main() {
             break; 
         } 
     }
-    
     return 0;
 }
+                               
