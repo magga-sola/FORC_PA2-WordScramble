@@ -10,120 +10,57 @@ using namespace std; // only for
 int LENOFWORD = 20;
 int LENOFFILE = 100;
 
-/*int random_number(int max_num) {
-    int random_num;
-
-    srand(time(0));
-    random_num = (rand() % max_num) + 1;
-
-    strcpy(word, master_list[random_num]);
-
-    return true;
-}
-bool random_function(int max_num, char word[], char master_list[][30]) {
-
-}
-
-*/
 
 
-
-int make_dash_index(int random_num) {
-    int dash_index;
-    if (!random_num % 2) {
-        // uneven number
-        dash_index = random_num + 1;
-    } else {
-        // even number
-        dash_index = (random_num*2);
-    }
-    return dash_index;
-}
-
-
-char* create_dash(int len) {
+void create_dash(int len, char word[] ){
     char dash = '_';
-    char word[len];
     for (int i=0; i < len; i++) {
         word[i] = dash;
     }
-    return word;
+    char *p = new char[len];
+    p = word;
+    return;
 }
-/*
-void modify_dash(char *normal_word, char *dash_string, int *hint_index) {
-    for (int i=0; i < strlen(dash_string); i++) {
-        if (hint_index[i] != '_') {
-            int index = hint_index[i];
-            dash_string[index] = normal_word[index];
-        }
+
+void print_dash(char *dash_string) {
+    int len = strlen(dash_string);
+
+    for (int i=0; i < len; i++) {
+        cout << dash_string[i] << " ";
     }
     return;
 }
-*/
 
-void print_dash(char *dash_string) {
-    for (int i=0; i < strlen(dash_string); i++) {
-        cout << dash_string[i] << " ";
-    }
-}
-
-char* hint(char* dash_string, char *scrambled_word, char *normal_word) {
+char *hint(char* dash_string2, char *scrambled_word, char *normal_word) {
     int random_num = (rand() % (strlen(normal_word))); // in order to choose a random index for revealed letter
     int lenOfString = strlen(normal_word);
-    dash_string = create_dash(lenOfString);
-    
-    //cout << "\033[2J\033[1;1H"; // clears the terminal window
-    print_dash(dash_string);
 
-    while (!(dash_string[random_num] == '_')) {
-        random_num = (rand() % (strlen(normal_word) - 1) + 1); 
-    }
+    // checking if pointer to dash_word exists
+    if (dash_string2 == NULL) {
+        cout << "hello" << endl;
+        dash_string2 = new char[lenOfString];
+        char dash_word[lenOfString];
+        create_dash(lenOfString, dash_word);
+        dash_string2 = dash_word;
+        dash_string2[random_num] = normal_word[random_num];
+        print_dash(dash_string2);
+        return dash_string2;
 
-    dash_string[random_num] = normal_word[random_num];
-    cout << normal_word << endl;
-    cout << "here is the dash index: " << dash_string[random_num] << " and the letter: " << normal_word[random_num] << endl;
-
-    return dash_string;
-}
-/*
-bool display(char *scrambled_word, char *normal_word, char hint_index[], int counter) {
-    int random_num = (rand() % (strlen(normal_word) - 1) + 1); // in order to choose a random index for revealed letter
-    char dash_string[strlen(normal_word)+1]; // in order to account for empty spaces in between
-
-    for (int i = 0; i < (strlen(normal_word)+1); i++) { 
-        dash_string[i] = dash;
-    }
-
-    cout << "hint_index strlen    " << strlen(hint_index) << endl;
-    cout << "word len      " << strlen(normal_word) << endl;
-    cout << "hint index list " << hint_index << endl;
-
-    for (int i =0; i < strlen(hint_index); i++) {
-        if (hint_index[i]) {
-            int index_num = hint_index[i];
-
-            // make index into dash index
-            int dash_index2 = make_dash(index_num);
-            dash_string[dash_index2] = normal_word[index_num];
+    }  else {
+        cout << "I'm in the else!" << dash_string2 << endl;
+        print_dash(dash_string2);
+        while (dash_string2[random_num] != '_') {
+            random_num = (rand() % (lenOfString));
         }
-    }
-    // while loop so that random num isn't in the hint_index array
+        dash_string2[random_num] = normal_word[random_num];
 
-    dash_string[random_num] = normal_word[random_num]; // random letter thingy
+        print_dash(dash_string2);
 
-    //
-    char char_of_num = (char)random_num;
-    //
-
-    //cout << "\033[2J\033[1;1H"; // clears the terminal window
-    for (int i=0; i < strlen(normal_word); i++) {
-        cout << dash_string[i] << ' ';
-    }
-    cout << endl;
-    counter++;
-    return true; 
+    }  
+    cout << "I'm the final pointer" << dash_string2 << endl;
+    return dash_string2;
 }
-*/
+
 void swap(char *arr, int i, int j) {
 
     char temp = arr[i];
@@ -133,7 +70,6 @@ void swap(char *arr, int i, int j) {
 }
 
 void randomize(char *pnr) {
-    
     srand(time(NULL));
 
     for (int i = strlen(pnr) - 1; i > 0; i--) {
@@ -174,7 +110,8 @@ int main() {
     char* word = new char[200]; // pointer to input word
     int counter;
     char the_string[LENOFWORD];
-    
+    int len;
+    bool has_entered = false;
 
     fin.open("100_words.fic", ios::binary | ios::in);
 
@@ -190,7 +127,6 @@ int main() {
 
     strcpy(pnr, random_word);
     int lenOfRandom = strlen(pnr);
-    char *dash_string = new char[lenOfRandom];
     randomize(pnr); // scrambling the random_word
 
     char *word2 = new char[strlen(random_word)]; // not scrambled random_word
@@ -226,19 +162,39 @@ int main() {
             cout << "Would you like a hint? (y/n)";
             cin >> letter;
             if (letter == 'y') {
-                char_array = hint(dash_string, pnr, word2);
+                int len = strlen(pnr);
+                int random_num2 = (rand() % (LENOFWORD)); // in order to choose a random index for revealed letter
+
+                // checking if pointer to dash_word exists
+                if (has_entered == false) {
+                    has_entered = true;
+                    cout << "hello" << endl;
+                    char *dash_pointer;
+                    dash_pointer = new char[len];
+                    char dash_word[len];
+                    create_dash(len, dash_word);
+                    dash_pointer = dash_word;
+                    dash_pointer[random_num2] = pnr[random_num2];
+                    print_dash(dash_pointer);
+
+                }  else {
+                    cout << "I'm in the else!" << dash_pointer << endl;
+                    cout << "ran thing: " << dash_pointer[random_num2] << endl; 
+                    print_dash(dash_pointer);
+                    while (dash_pointer[random_num2] != '_') {
+                        random_num2 = (rand() % (len));
+                    }
+                    dash_pointer[random_num2] = pnr[random_num2];
+                    print_dash(dash_pointer);
+                }  
+                //dash_pointer = hint(dash_pointer, pnr, word2);
             }
+            points--;
         }
-
-
-
-
-
     }
-
-
     return 0;
 }
+
 /*
 int main() {
 
@@ -318,19 +274,6 @@ int main() {
         }
         
     }
-    
-    
-    
-
-    // scramble the word
-    //fischer algorithm thingy(random_word);
-
-    // show the scrambled word
-
-    // user can guess the word
-    //play();
-
-    // ask user if they want to continue
     return 0;
 }
 */
